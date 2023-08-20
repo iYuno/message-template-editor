@@ -161,7 +161,6 @@ const Condition: FC<ICondition> = ({newCondition, tab, path}) => {
       switch (newPath[0]) {
         case 'then':
           if(Array.isArray(condition.then) && condition.then.length > 1) {
-            // condition.then.splice(+newPath[1], 1)
             condition.then = [...condition.then.slice(0, +newPath[1]), ...condition.then.slice(+newPath[1] + 1)]
           } else if(Array.isArray(condition.then)) {
             condition.then = '';

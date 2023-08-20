@@ -21,10 +21,12 @@ const PreviewModal: FC<IPreviewModal> = ({modalHandler}) => {
   const [messagePreview, setMessagePreview] = useState('')
 
   const varsHandler = (event: ChangeEvent<HTMLTextAreaElement>, value: string) => {
+    const newText = event.target.value
+
     clearTimeout(debounceTimer)
 
     debounceTimer = setTimeout(() => {
-      setVarNames(prevState => ({...prevState, [value as keyof typeof varNames]: event.target.value}))
+      setVarNames(prevState => ({...prevState, [value as keyof typeof varNames]: newText.trim()}))
     }, 250)
 
   }

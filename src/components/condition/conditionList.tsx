@@ -5,6 +5,7 @@ import TextArea from "../textArea";
 import {ConditionContext, da} from "../../contexts/conditionContext";
 import {ConditionContextStateType, CurrentInputStateType, IfThenElse} from "../../utils/types";
 import {CurrentInputContext} from "../../contexts/currentInputContext";
+import s from './condition.module.css'
 
 const ConditionList: FC = () => {
 
@@ -14,7 +15,7 @@ const ConditionList: FC = () => {
 
   return(
     <>
-      <div>
+      <div className={s.textContainer}>
         <TextArea value={data.topText} isRequired={false} isCondition={true} path={['top']}/>
       </div>
       {
@@ -34,7 +35,9 @@ const ConditionList: FC = () => {
           </React.Fragment>
         ))
       }
-      <TextArea value={data.bottomText} isRequired={false} isCondition={false} path={['bottom']}/>
+      <div className={s.textContainer}>
+        <TextArea value={data.bottomText} isRequired={false} isCondition={false} path={['bottom']}/>
+      </div>
     </>
   )
 }

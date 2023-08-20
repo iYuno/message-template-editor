@@ -106,3 +106,8 @@
 .else {
     color: var(--secondary);
 }
+
+
+.textContainer:last-of-type {
+    margin-bottom: .5rem;
+}
