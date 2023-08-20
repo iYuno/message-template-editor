@@ -47,6 +47,7 @@ const TextArea: FC<ITextArea> = ({isRequired, isCondition, value, path}) => {
         }
       })
     } else {
+        console.log(newPath)
         condition[newPath[0] as keyof typeof condition] = newText ? newText : ''
     }
     return condition
@@ -61,12 +62,13 @@ const TextArea: FC<ITextArea> = ({isRequired, isCondition, value, path}) => {
       const tempTemplate = JSON.parse(localStorage.tempTemplate) as templateType
       if(!(path[0] === 'top' || path[0] === 'bottom')) {
         setData(prevState => {
-          const newState = {...prevState, conditions: prevState.conditions.splice(+path[0], 1, changeStateHandler(path.slice(1), prevState.conditions[+path[0]], newText))}
+          const newState = {
+            ...prevState,
+            conditions: [...prevState.conditions.slice(0, +path[0]), changeStateHandler(path.slice(1), prevState.conditions[+path[0]], newText), ...prevState.conditions.slice(+path[0] + 1)]
+          }
           localStorage.setItem('tempTemplate', JSON.stringify(newState))
           return newState
         })
-
-        localStorage.setItem('tempTemplate', JSON.stringify({...tempTemplate, conditions: tempTemplate.conditions.splice(+path[0], 1, changeStateHandler(path.slice(1), tempTemplate.conditions[+path[0]], newText))}))
       } else {
         switch (path[0]) {
           case 'top':
@@ -124,17 +126,31 @@ const TextArea: FC<ITextArea> = ({isRequired, isCondition, value, path}) => {
     }
     return condition as IfThenElse
   }
-  const newConditionHandler = () => {
-    const newCondition = updateCondition(path.slice(1), data.conditions[+path[0]])
-    setData(prevState => {
-      const newState = {
-        ...prevState,
-        conditions: prevState.conditions.splice(+path[0], 1, newCondition)
-      }
 
-      localStorage.setItem('tempTemplate', JSON.stringify(newState))
-      return newState
-    })
+  const newConditionHandler = () => {
+    if(path[0] !== 'top') {
+      const newCondition = updateCondition(path.slice(1), data.conditions[+path[0]])
+      setData(prevState => {
+        const newState = {
+          ...prevState,
+          conditions: prevState.conditions.splice(+path[0], 1, newCondition)
+        }
+
+        localStorage.setItem('tempTemplate', JSON.stringify(newState))
+        return newState
+      })
+    } else {
+      setData(prevState => {
+        const newState = {
+        ...prevState,
+          conditions: [...prevState.conditions, {if: '', optionalThen: null, then: '', optionalElse: null, else: '', optionalText: ''}]
+        }
+
+        localStorage.setItem('tempTemplate', JSON.stringify(newState))
+        return newState
+      })
+    }
+
   }
 
   return(

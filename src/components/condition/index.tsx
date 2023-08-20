@@ -158,7 +158,6 @@ const Condition: FC<ICondition> = ({newCondition, tab, path}) => {
         }
       })
     } else {
-      console.log(1)
       switch (newPath[0]) {
         case 'then':
           if(Array.isArray(condition.then) && condition.then.length > 1) {
@@ -182,6 +181,7 @@ const Condition: FC<ICondition> = ({newCondition, tab, path}) => {
   }
 
   const deleteHandle = () => {
+    console.log(path)
     if(path.length > 1) {
       const tempTemplate = JSON.parse(localStorage.tempTemplate) as templateType
       const newCondition = deleteCondition(path.slice(1), tempTemplate.conditions[+path[0]])
@@ -199,9 +199,9 @@ const Condition: FC<ICondition> = ({newCondition, tab, path}) => {
       setData(prevState => {
         const newState = {
           ...prevState,
-          conditions: prevState.conditions.slice(0, +path[0]), ...prevState.conditions.slice(+path[0] + 1)
+          conditions: [...prevState.conditions.slice(0, +path[0]), ...prevState.conditions.slice(+path[0] + 1)]
         }
-
+        console.log(newState)
         localStorage.setItem('tempTemplate', JSON.stringify({...newState}))
 
         return newState
