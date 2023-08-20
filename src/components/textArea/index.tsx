@@ -47,7 +47,6 @@ const TextArea: FC<ITextArea> = ({isRequired, isCondition, value, path}) => {
         }
       })
     } else {
-        console.log(newPath)
         condition[newPath[0] as keyof typeof condition] = newText ? newText : ''
     }
     return condition
@@ -133,7 +132,7 @@ const TextArea: FC<ITextArea> = ({isRequired, isCondition, value, path}) => {
       setData(prevState => {
         const newState = {
           ...prevState,
-          conditions: prevState.conditions.splice(+path[0], 1, newCondition)
+          conditions: [...prevState.conditions.slice(0, +path[0]), newCondition, ...prevState.conditions.slice(+path[0] + 1)]
         }
 
         localStorage.setItem('tempTemplate', JSON.stringify(newState))

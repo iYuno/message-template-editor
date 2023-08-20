@@ -161,7 +161,8 @@ const Condition: FC<ICondition> = ({newCondition, tab, path}) => {
       switch (newPath[0]) {
         case 'then':
           if(Array.isArray(condition.then) && condition.then.length > 1) {
-            condition.then.splice(+newPath[1], 1)
+            // condition.then.splice(+newPath[1], 1)
+            condition.then = [...condition.then.slice(0, +newPath[1]), ...condition.then.slice(+newPath[1] + 1)]
           } else if(Array.isArray(condition.then)) {
             condition.then = '';
             condition.optionalThen = null
@@ -169,7 +170,7 @@ const Condition: FC<ICondition> = ({newCondition, tab, path}) => {
           break
         case 'else':
           if(Array.isArray(condition.else) && condition.else.length > 1) {
-            condition.else.splice(+newPath[1], 1)
+            condition.else = [...condition.else.slice(0, +newPath[1]), ...condition.else.slice(+newPath[1] + 1)]
           } else if(Array.isArray(condition.else)) {
             condition.else = '';
             condition.optionalElse = null
@@ -181,14 +182,13 @@ const Condition: FC<ICondition> = ({newCondition, tab, path}) => {
   }
 
   const deleteHandle = () => {
-    console.log(path)
     if(path.length > 1) {
       const tempTemplate = JSON.parse(localStorage.tempTemplate) as templateType
       const newCondition = deleteCondition(path.slice(1), tempTemplate.conditions[+path[0]])
       setData(prevState => {
         const newState = {
           ...tempTemplate,
-          conditions: tempTemplate.conditions.splice(+path[0], 1, newCondition)
+          conditions: [...tempTemplate.conditions.slice(0, +path[0]), newCondition, ...tempTemplate.conditions.slice(+path[0] + 1)]
         }
 
         localStorage.setItem('tempTemplate', JSON.stringify({...newState}))
@@ -201,7 +201,6 @@ const Condition: FC<ICondition> = ({newCondition, tab, path}) => {
           ...prevState,
           conditions: [...prevState.conditions.slice(0, +path[0]), ...prevState.conditions.slice(+path[0] + 1)]
         }
-        console.log(newState)
         localStorage.setItem('tempTemplate', JSON.stringify({...newState}))
 
         return newState

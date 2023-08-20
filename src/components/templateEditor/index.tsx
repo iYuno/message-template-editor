@@ -64,7 +64,7 @@ const TemplateEditor: FC<ITemplateEditor> = ({isActive, activeHandler, modalHand
         setData(prevState => {
           const newState = {
             ...prevState,
-            conditions: prevState.conditions.splice(+currentInput[0], 1, changeStateHandler(currentInput.slice(1), data.conditions[+currentInput[0]], variable))
+            conditions: [...prevState.conditions.slice(0, +currentInput[0]), changeStateHandler(currentInput.slice(1), data.conditions[+currentInput[0]], variable), ...prevState.conditions.slice(+currentInput[0] + 1)]
           }
           localStorage.setItem('tempTemplate', JSON.stringify(newState))
 
