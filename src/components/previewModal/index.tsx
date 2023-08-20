@@ -15,7 +15,7 @@ let debounceTimer: NodeJS.Timeout;
 
 const PreviewModal: FC<IPreviewModal> = ({modalHandler}) => {
 
-  const [varNames, setVarNames] = useState<variablesType>({} as variablesType)
+  const [varNames, setVarNames] = useState<variablesType>({firstName: null, company: null, lastName: null, position: null} as variablesType)
   const [data, setData] = useContext(ConditionContext) as ConditionContextStateType
   const [currentInput, setCurrentInput] = useContext(CurrentInputContext) as CurrentInputStateType
   const [messagePreview, setMessagePreview] = useState('')
@@ -32,9 +32,9 @@ const PreviewModal: FC<IPreviewModal> = ({modalHandler}) => {
   }
 
   const messageHandler = (condition: IfThenElse) => {
-    const variable = varNames[condition.if.trim().slice(1, -1) as keyof typeof varNames]
+    const match = condition.if.trim().match(/\{(.*?)\}/)
 
-    if(variable && variable.length > 0) {
+    if(match && match[1] && varNames[match[1] as keyof typeof varNames]) {
       switch (typeof condition.then) {
         case 'string':
           setMessagePreview(prevState => prevState + condition.then)
@@ -86,10 +86,11 @@ const PreviewModal: FC<IPreviewModal> = ({modalHandler}) => {
 
     setMessagePreview(prevState => {
       return prevState.replace(/\{([^{}]+)\}/g, (match) => {
-        if(varNames[match.slice(1, -1) as keyof typeof varNames]) {
-          return `${varNames[match.slice(1, -1) as keyof typeof varNames]}`;
+        console.log(match.slice(1, -1))
+        if(varNames.hasOwnProperty(match.slice(1, -1))) {
+          return `${varNames[match.slice(1, -1) as keyof typeof varNames] !== null ? varNames[match.slice(1, -1) as keyof typeof varNames] : ''}`;
         } else {
-          return ''
+          return match
         }
       })
     })

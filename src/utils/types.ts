@@ -29,8 +29,8 @@ export type CurrentInputType =
   | null
 
 export type variablesType = {
-  firstname: string | null,
-  lastname: string | null,
+  firstName: string | null,
+  lastName: string | null,
   company: string | null,
   position: string | null
 }
