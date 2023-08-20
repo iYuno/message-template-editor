@@ -1,0 +1,25 @@
+
+:root {
+  --text: #ffffff;
+  --background: #232323;
+  --background-rgb: 35, 35, 35;
+  --primary: #99f43e;
+  --primary-rgb: 153, 244, 62;
+  --secondary: #3838fa;
+  --accent: #2ee0e0;
+  --accent-rgb: 46, 244, 244;
+  --secondary-accent: #ef4343;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', 'Open Sans',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
