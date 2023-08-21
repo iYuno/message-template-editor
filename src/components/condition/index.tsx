@@ -1,4 +1,4 @@
-import {FC, useContext, useMemo, useState} from "react";
+import {FC, useCallback, useContext, useMemo, useState} from "react";
 import TextArea from "../textArea";
 import s from './condition.module.css'
 import React from "react";
@@ -28,16 +28,8 @@ const Condition: FC<ICondition> = ({newCondition, tab, path}) => {
         return <p className={s.else}>{key}</p>
     }
   }
-  const getRow = (key: string, value: string | IfThenElse | IfThenElse[] | null, index: number) => {
+  const getRow = useCallback((key: string, value: string | IfThenElse | IfThenElse[] | null, index: number) => {
     switch (`${key} ${typeof value}`) {
-      // case 'optionalText string':
-        // return <div className={s.option}>
-        //         <span className={s.tab}/>
-        //         <TextArea
-        //           value={`${key} ${value}`}
-        //           isRequired={false}
-        //           isCondition={false}/>
-        //        </div>
       case 'optionalThen string':
         return <div className={s.row}>
           {
@@ -139,7 +131,7 @@ const Condition: FC<ICondition> = ({newCondition, tab, path}) => {
             isCondition={!(key === 'if' || key === 'optionalText')}/>
         </div>
     }
-  }
+  }, [])
 
   const deleteCondition = (newPath: string[], condition: IfThenElse) => {
     if(newPath.length - 2) {

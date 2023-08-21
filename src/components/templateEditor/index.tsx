@@ -1,4 +1,4 @@
-import {FC, useContext, useEffect, useState} from "react";
+import {FC, useCallback, useContext, useEffect, useState} from "react";
 import s from './templateEditor.module.css'
 import {arrVars,} from "../../utils/consts";
 import TextArea from "../textArea";
@@ -56,7 +56,7 @@ const TemplateEditor: FC<ITemplateEditor> = ({isActive, activeHandler, modalHand
 
     return condition
   }
-  const addVariableHandler = (variable: string) => {
+  const addVariableHandler = useCallback((variable: string) => {
     const tempTemplate = JSON.parse(localStorage.tempTemplate) as templateType
     clearTimeout(timeout)
     timeout = setTimeout(() => {
@@ -116,7 +116,7 @@ const TemplateEditor: FC<ITemplateEditor> = ({isActive, activeHandler, modalHand
         }
       }
     }, 50)
-  }
+  }, [])
 
   const previewOpenHandler = (state: boolean) => {
     if(state) {

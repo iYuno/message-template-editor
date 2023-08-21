@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useContext, useMemo, useState} from "react";
+import React, {ChangeEvent, FC, useContext, useEffect, useMemo, useState} from "react";
 import s from './previewModal.module.css'
 import {arrVars} from "../../utils/consts";
 import {v4 as uuid4} from "uuid";
@@ -71,7 +71,7 @@ const PreviewModal: FC<IPreviewModal> = ({modalHandler}) => {
     }
   }
 
-  useMemo(() => {
+  useEffect(() => {
 
     setMessagePreview(data.topText)
 
