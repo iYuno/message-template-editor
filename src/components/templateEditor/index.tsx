@@ -116,7 +116,7 @@ const TemplateEditor: FC<ITemplateEditor> = ({isActive, activeHandler, modalHand
         }
       }
     }, 50)
-  }, [])
+  }, [currentInput])
 
   const previewOpenHandler = (state: boolean) => {
     if(state) {
