@@ -56,6 +56,7 @@ const TemplateEditor: FC<ITemplateEditor> = ({isActive, activeHandler, modalHand
 
     return condition
   }
+
   const addVariableHandler = useCallback((variable: string) => {
     const tempTemplate = JSON.parse(localStorage.tempTemplate) as templateType
     clearTimeout(timeout)

@@ -116,7 +116,10 @@ const PreviewModal: FC<IPreviewModal> = ({modalHandler}) => {
               <div className={s.closeIcon}>
                 <span
                   className="material-symbols-outlined"
-                  onClick={modalHandler}
+                  onClick={() => {
+                    modalHandler();
+                    setCurrentInput(['top'])
+                  }}
                 >
                 close
               </span>
